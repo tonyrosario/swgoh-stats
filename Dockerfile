@@ -19,6 +19,10 @@ RUN apk update && \
   apk add --no-cache tini && \
   rm -rf /var/cache/apk/*
 
+# the app only needs node; drop npm/npx/corepack and their bundled dependencies
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+  /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack
+
 USER node
 
 ENTRYPOINT ["/sbin/tini", "--"]
